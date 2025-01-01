@@ -6,11 +6,18 @@ namespace SthVrmUtil.Runtime.ExpressionWrapper.Internal
 {
     internal static class ExpressionKeyConverter
     {
+
+        private const string SurprisedKey = "surprised";
+
         public static ExpressionKey ToVrm10(this BlendShapeKey key)
         {
             switch (key.Preset)
             {
-                case BlendShapePreset.Unknown: return ExpressionKey.CreateCustom(key.Name);
+                case BlendShapePreset.Unknown:
+                    {
+                        if (key.Name == SurprisedKey) return ExpressionKey.CreateFromPreset(ExpressionPreset.surprised);
+                        return ExpressionKey.CreateCustom(key.Name);
+                    }
                 case BlendShapePreset.Neutral: return ExpressionKey.CreateFromPreset(ExpressionPreset.neutral);
                 case BlendShapePreset.A: return ExpressionKey.CreateFromPreset(ExpressionPreset.aa);
                 case BlendShapePreset.I: return ExpressionKey.CreateFromPreset(ExpressionPreset.ih);
@@ -42,7 +49,7 @@ namespace SthVrmUtil.Runtime.ExpressionWrapper.Internal
                 case ExpressionPreset.angry: return BlendShapeKey.CreateFromPreset(BlendShapePreset.Angry);
                 case ExpressionPreset.sad: return BlendShapeKey.CreateFromPreset(BlendShapePreset.Sorrow);
                 case ExpressionPreset.relaxed: return BlendShapeKey.CreateFromPreset(BlendShapePreset.Fun);
-                case ExpressionPreset.surprised: return BlendShapeKey.CreateUnknown("surprised");
+                case ExpressionPreset.surprised: return BlendShapeKey.CreateUnknown(SurprisedKey);
                 case ExpressionPreset.aa: return BlendShapeKey.CreateFromPreset(BlendShapePreset.A);
                 case ExpressionPreset.ih: return BlendShapeKey.CreateFromPreset(BlendShapePreset.I);
                 case ExpressionPreset.ou: return BlendShapeKey.CreateFromPreset(BlendShapePreset.U);
